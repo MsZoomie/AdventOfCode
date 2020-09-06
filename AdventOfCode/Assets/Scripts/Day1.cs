@@ -5,6 +5,31 @@ using UnityEngine;
 public class Day1 : MonoBehaviour
 {
     //----------------------------------------
+    // Both puzzles
+    //----------------------------------------
+    public UnityEngine.UI.Text outputTextField;
+
+
+    /// <summary>
+    /// Calculates the required fuel for a module.
+    /// </summary>
+    /// <param name="mass"> Mass of the module.</param>
+    /// <returns>Required fuel.</returns>
+    int CalculateFuel(int mass)
+    {
+        int fuel = Mathf.FloorToInt(mass / 3);
+        fuel -= 2;
+        return fuel;
+    }
+
+    void ShowOutput(int output)
+    {
+        outputTextField.text = output.ToString();
+    }
+
+
+
+    //----------------------------------------
     // Puzzle 1a
     //----------------------------------------
 
@@ -25,20 +50,10 @@ public class Day1 : MonoBehaviour
             totalFuel += CalculateFuel(int.Parse(modules[i]));
         }
 
-        Debug.Log("total fuel: " + totalFuel.ToString());
+        ShowOutput(totalFuel);
     }
 
-    /// <summary>
-    /// Calculates the required fuel for a module.
-    /// </summary>
-    /// <param name="mass"> Mass of the module.</param>
-    /// <returns>Required fuel.</returns>
-    int CalculateFuel(int mass)
-    {
-        int fuel = Mathf.FloorToInt(mass / 3);
-        fuel -= 2;
-        return fuel;
-    }
+
 
     //----------------------------------------
     // Puzzle 1b
@@ -68,6 +83,6 @@ public class Day1 : MonoBehaviour
             }
         }
 
-        Debug.Log("total fuel: " + totalFuel.ToString());
+        ShowOutput(totalFuel);
     }
 }
