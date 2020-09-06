@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Day1 : MonoBehaviour
 {
-    public TextAsset input;
+    //----------------------------------------
+    // Puzzle 1a
+    //----------------------------------------
 
-    public void CalculateExample()
+    /// <summary>
+    /// Calculates the total fuel by individually calculating 
+    /// the required fuel of each module and adding 
+    /// the results together.
+    /// </summary>
+    /// <param name="inputFile">Text file with input.</param>
+    public void CalcTotalFuel(TextAsset inputFile)
     {
-        Debug.Log(CalculateFuel(12).ToString());
-        Debug.Log(CalculateFuel(14).ToString());
-        Debug.Log(CalculateFuel(1969).ToString());
-        Debug.Log(CalculateFuel(100756).ToString());
-    }
-
-    public void CalcTotalFuel()
-    {
-        string[] modules = input.text.Split('\n');
+        string[] modules = inputFile.text.Split('\n');
 
         int totalFuel = 0;
 
@@ -27,8 +27,6 @@ public class Day1 : MonoBehaviour
 
         Debug.Log("total fuel: " + totalFuel.ToString());
     }
-
-
 
     /// <summary>
     /// Calculates the required fuel for a module.
