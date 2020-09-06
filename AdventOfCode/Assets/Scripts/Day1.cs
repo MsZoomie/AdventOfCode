@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Day1 : MonoBehaviour
 {
-    
+    public TextAsset input;
 
     public void CalculateExample()
     {
@@ -13,6 +13,21 @@ public class Day1 : MonoBehaviour
         Debug.Log(CalculateFuel(1969).ToString());
         Debug.Log(CalculateFuel(100756).ToString());
     }
+
+    public void CalcTotalFuel()
+    {
+        string[] modules = input.text.Split('\n');
+
+        int totalFuel = 0;
+
+        for (int i = 0; i < modules.Length; i++)
+        {
+            totalFuel += CalculateFuel(int.Parse(modules[i]));
+        }
+
+        Debug.Log("total fuel: " + totalFuel.ToString());
+    }
+
 
 
     /// <summary>
