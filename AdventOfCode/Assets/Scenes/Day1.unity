@@ -193,7 +193,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'B: '
+  m_Text: 'B: Extra Fuel'
 --- !u!222 &287039776
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -581,10 +581,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 474095504}
         m_TargetAssemblyTypeName: Day1, Assembly-CSharp
-        m_MethodName: CalcTotalFuel
+        m_MethodName: CalcExtraFuel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 4900000, guid: 550a73611e23a314baef4f9957f2e3f6, type: 3}
+          m_ObjectArgument: {fileID: 4900000, guid: d4257f31d12e3c149945b18303a3989c, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.TextAsset, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

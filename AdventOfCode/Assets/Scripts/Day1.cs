@@ -39,4 +39,35 @@ public class Day1 : MonoBehaviour
         fuel -= 2;
         return fuel;
     }
+
+    //----------------------------------------
+    // Puzzle 1b
+    //----------------------------------------
+
+    public void CalcExtraFuel(TextAsset inputFile)
+    {
+        string[] modules = inputFile.text.Split('\n');
+        int totalFuel = 0;
+        int currentFuel;
+        List<int> extraFuel = new List<int>();
+
+        for (int i = 0; i < modules.Length; i++)
+        {
+            extraFuel.Clear();
+            currentFuel = CalculateFuel(int.Parse(modules[i]));
+
+            while (currentFuel > 0)
+            {
+                extraFuel.Add(currentFuel);
+                currentFuel = CalculateFuel(currentFuel);
+            }
+
+            for (int j = 0; j < extraFuel.Count; j++)
+            {
+                totalFuel += extraFuel[j];
+            }
+        }
+
+        Debug.Log("total fuel: " + totalFuel.ToString());
+    }
 }
