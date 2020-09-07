@@ -11,6 +11,7 @@ public class Day8 : MonoBehaviour
     public void DecodeA(TextAsset puzzleInput)
     {
         List<Layer> layers = BuildLayers(puzzleInput);
+
         int fewestZeros = int.MaxValue;
         foreach (var layer in layers)
         {
@@ -32,6 +33,38 @@ public class Day8 : MonoBehaviour
         int answer = wantedLayer.ones * wantedLayer.twos;
         Debug.Log(answer.ToString());
     }
+
+
+    public void DecodeB(TextAsset puzzleInput)
+    {
+        List<Layer> layers = BuildLayers(puzzleInput);
+        int[] finalImage = new int[WIDTH * HEIGHT];
+
+        for (int i = 0; i < WIDTH * HEIGHT; i++)
+        {
+            for (int j = 0; j < layers.Count; j++)
+            {
+                int pixel = layers[j].digits[i];
+
+                if (pixel != 2 || j == layers.Count-1)
+                {
+                    finalImage[i] = pixel;
+                    break;
+                }
+            }
+        }
+
+        string temp = "";
+        for (int i = 0; i < finalImage.Length; i++)
+        {
+            if (i % WIDTH == 0)
+                temp += "\n";
+
+            temp += finalImage[i].ToString();
+        }
+        Debug.Log(temp);
+    }
+
 
 
     public List<Layer> BuildLayers(TextAsset puzzleInput)
