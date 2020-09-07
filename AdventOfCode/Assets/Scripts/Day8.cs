@@ -8,6 +8,8 @@ public class Day8 : MonoBehaviour
     public  int WIDTH = 25;
     public  int HEIGHT = 6;
 
+    public UnityEngine.UI.Image pixel;
+
     public void DecodeA(TextAsset puzzleInput)
     {
         List<Layer> layers = BuildLayers(puzzleInput);
@@ -44,16 +46,17 @@ public class Day8 : MonoBehaviour
         {
             for (int j = 0; j < layers.Count; j++)
             {
-                int pixel = layers[j].digits[i];
+                int pixelDigit = layers[j].digits[i];
 
-                if (pixel != 2 || j == layers.Count-1)
+                if (pixelDigit != 2 || j == layers.Count-1)
                 {
-                    finalImage[i] = pixel;
+                    finalImage[i] = pixelDigit;
                     break;
                 }
             }
         }
 
+        /*
         string temp = "";
         for (int i = 0; i < finalImage.Length; i++)
         {
@@ -62,12 +65,51 @@ public class Day8 : MonoBehaviour
 
             temp += finalImage[i].ToString();
         }
-        Debug.Log(temp);
+        Debug.Log(temp);*/
+
+        DrawImage(finalImage);
     }
 
 
+    private void DrawImage(int[] image)
+    {
+        float pixelWidth = 20;
+        Vector2 pos = new Vector2(-(WIDTH / 2f) * pixelWidth, (HEIGHT / 2f) * pixelWidth);
+        float firstX = pos.x;
 
-    public List<Layer> BuildLayers(TextAsset puzzleInput)
+        Debug.Log("first pos: " + pos.x + "," + pos.y);
+
+        for (int i = 0; i < WIDTH*HEIGHT; i++)
+        {
+            UnityEngine.UI.Image newPixel = Instantiate(pixel, pixel.transform.parent);
+            newPixel.transform.localPosition = pos;
+            newPixel.gameObject.SetActive(true);
+
+            switch (image[i])
+            {
+                case 0:
+                    newPixel.color = Color.black;
+                    break;
+                case 1:
+                    newPixel.color = Color.white;
+                    break;
+                default:
+                    break;
+            }
+
+
+            pos.x += pixelWidth;
+            if (i % WIDTH == 0 )
+            {
+                pos.x = firstX;
+                pos.y -= pixelWidth;
+            }
+            
+        }
+    }
+
+
+    private List<Layer> BuildLayers(TextAsset puzzleInput)
     {
         Layer currentLayer = new Layer();
 
