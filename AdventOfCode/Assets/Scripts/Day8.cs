@@ -99,7 +99,7 @@ public class Day8 : MonoBehaviour
 
 
             pos.x += pixelWidth;
-            if (i % WIDTH == 0 )
+            if (i % WIDTH == WIDTH-1 && i != 0)
             {
                 pos.x = firstX;
                 pos.y -= pixelWidth;
