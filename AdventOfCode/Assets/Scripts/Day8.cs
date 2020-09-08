@@ -9,7 +9,25 @@ public class Day8 : MonoBehaviour
     public  int HEIGHT = 6;
 
     public UnityEngine.UI.Image pixel;
+    public UnityEngine.UI.Text answerText;
 
+    /// <summary>
+    /// An array of the digits of a layer. The number of zeroes, 
+    /// ones and twos are saved for the first decoding.
+    /// </summary>
+    public struct Layer
+    {
+        public int[] digits;
+        public int zeroes;
+        public int ones;
+        public int twos;
+    }
+
+    /// <summary>
+    /// Find the layer with fewest zeroes and multiply 
+    /// the number of ones and twos in that layer.
+    /// </summary>
+    /// <param name="puzzleInput">Input for the puzzle.</param>
     public void DecodeA(TextAsset puzzleInput)
     {
         List<Layer> layers = BuildLayers(puzzleInput);
@@ -17,31 +35,26 @@ public class Day8 : MonoBehaviour
         int fewestZeros = int.MaxValue;
         foreach (var layer in layers)
         {
-            fewestZeros = Mathf.Min(fewestZeros, layer.zeros);
+            fewestZeros = Mathf.Min(fewestZeros, layer.zeroes);
         }
 
-        Layer wantedLayer = layers.Find(x => x.zeros == fewestZeros);
-
-        string y = "";
-        for (int i = 0; i < wantedLayer.digits.Length; i++)
-        {
-            if (i % WIDTH == 0)
-                y += "\n";
-
-            y += wantedLayer.digits[i].ToString();
-        }
-        Debug.Log(y);
+        Layer wantedLayer = layers.Find(x => x.zeroes == fewestZeros);
 
         int answer = wantedLayer.ones * wantedLayer.twos;
-        Debug.Log(answer.ToString());
+        answerText.text = answer.ToString();
     }
 
-
+    /// <summary>
+    /// Combine the layers to the final image and draw it.
+    /// </summary>
+    /// <param name="puzzleInput">Input for the puzzle.</param>
     public void DecodeB(TextAsset puzzleInput)
     {
         List<Layer> layers = BuildLayers(puzzleInput);
         int[] finalImage = new int[WIDTH * HEIGHT];
 
+        /* Iterate through all the pixels in the image. For each pixel, 
+         * iterate through the layers until you find a pixel that is not transparent.*/
         for (int i = 0; i < WIDTH * HEIGHT; i++)
         {
             for (int j = 0; j < layers.Count; j++)
@@ -56,17 +69,6 @@ public class Day8 : MonoBehaviour
             }
         }
 
-        /*
-        string temp = "";
-        for (int i = 0; i < finalImage.Length; i++)
-        {
-            if (i % WIDTH == 0)
-                temp += "\n";
-
-            temp += finalImage[i].ToString();
-        }
-        Debug.Log(temp);*/
-
         DrawImage(finalImage);
     }
 
@@ -77,8 +79,7 @@ public class Day8 : MonoBehaviour
         Vector2 pos = new Vector2(-(WIDTH / 2f) * pixelWidth, (HEIGHT / 2f) * pixelWidth);
         float firstX = pos.x;
 
-        Debug.Log("first pos: " + pos.x + "," + pos.y);
-
+        // Create pixels in the corresponding colors.
         for (int i = 0; i < WIDTH*HEIGHT; i++)
         {
             UnityEngine.UI.Image newPixel = Instantiate(pixel, pixel.transform.parent);
@@ -97,14 +98,13 @@ public class Day8 : MonoBehaviour
                     break;
             }
 
-
+            // Decide next pixel position.
             pos.x += pixelWidth;
             if (i % WIDTH == WIDTH-1 && i != 0)
             {
                 pos.x = firstX;
                 pos.y -= pixelWidth;
             }
-            
         }
     }
 
@@ -140,7 +140,7 @@ public class Day8 : MonoBehaviour
             switch (currentLayer.digits[layerIndex])
             {
                 case 0:
-                    currentLayer.zeros++;
+                    currentLayer.zeroes++;
                     break;
                 case 1:
                     currentLayer.ones++;
@@ -157,14 +157,4 @@ public class Day8 : MonoBehaviour
         layers.Add(currentLayer);
         return layers;
     }
-
-    
-}
-
-public class Layer
-{
-    public int[] digits;
-    public int zeros;
-    public int ones;
-    public int twos;
 }
